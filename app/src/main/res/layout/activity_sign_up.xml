@@ -33,6 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="아이디를 입력해 주세요"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/tv_id" />
 
 
@@ -51,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="비밀번호를 입력해 주세요"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/tv_pwd" />
 
     <TextView
@@ -68,20 +70,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="닉네임을 입력해 주세요"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
+
+    <TextView
+        android:id="@+id/tv_mbti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="MBTI"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_nickname" />
+
+    <EditText
+        android:id="@+id/edit_mbti"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="mbti를 입력해 주세요"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@+id/tv_mbti" />
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
+        android:layout_marginBottom="40dp"
         android:text="회원가입 하기"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-        />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
