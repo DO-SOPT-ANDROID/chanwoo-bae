@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DoSoptTemplate</string>
+    <string name="sign_in"><u>회원 가입</u></string>
 </resources>
