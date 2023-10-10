@@ -32,8 +32,11 @@
         android:id="@+id/edit_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
         android:hint="아이디를 입력해 주세요"
         android:inputType="text"
+        android:maxLength="10"
+        android:minEms="6"
         app:layout_constraintTop_toBottomOf="@+id/tv_id" />
 
 
@@ -51,8 +54,10 @@
         android:id="@+id/edit_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="12"
         android:hint="비밀번호를 입력해 주세요"
         android:inputType="text"
+        android:maxLength="12"
         app:layout_constraintTop_toBottomOf="@+id/tv_pwd" />
 
     <TextView
@@ -71,6 +76,7 @@
         android:layout_height="wrap_content"
         android:hint="닉네임을 입력해 주세요"
         android:inputType="text"
+        android:maxLength="10"
         app:layout_constraintTop_toBottomOf="@+id/tv_nickname" />
 
     <TextView
@@ -87,8 +93,10 @@
         android:id="@+id/edit_mbti"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="4"
         android:hint="mbti를 입력해 주세요"
         android:inputType="text"
+        android:maxLength="4"
         app:layout_constraintTop_toBottomOf="@+id/tv_mbti" />
 
     <Button
