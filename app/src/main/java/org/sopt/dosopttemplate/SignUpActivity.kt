@@ -22,24 +22,24 @@ class SignUpActivity : AppCompatActivity() {
         val arrayFlag = booleanArrayOf(false, false, false, false)
 
         btnLogin.setOnClickListener {
-//            input List에 저장
+            // input List에 저장
             val userInputList = listOf(
                 editId.text.toString(),
                 editPwd.text.toString(),
                 editNickname.text.toString(),
                 editMbti.text.toString(),
             )
-//            if else문 축약
+            // if else문 축약
             arrayFlag[0] = userInputList[0].length in 6..10
             arrayFlag[1] = userInputList[1].length in 8..12
             arrayFlag[2] = userInputList[2].length in 1..8
             arrayFlag[3] = userInputList[3].length == 4
 
-//            모든 조건이 true인 경우 로그인 화면으로 이동
+            // 모든 조건이 true인 경우 로그인 화면으로 이동
             if (arrayFlag.all { it }) {
                 sendUserData(userInputList)
             } else {
-//                추후에 textwathcer로 변경
+                // 추후에 textwathcer로 변경
                 showSnackMessage(arrayFlag)
             }
         }
@@ -48,7 +48,10 @@ class SignUpActivity : AppCompatActivity() {
     private fun sendUserData(userInputList: List<String>) {
         val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
         intent.putStringArrayListExtra("userInputList", ArrayList(userInputList))
-        startActivity(intent)
+        // LoginActivity로 결과를 반환
+        setResult(RESULT_OK, intent)
+        // 결과 반환 후 현재 액티비티 종료
+        finish()
     }
 
     private fun showSnackMessage(arrayFlag: BooleanArray) {
