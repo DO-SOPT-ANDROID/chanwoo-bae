@@ -10,5 +10,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initGetData()
+    }
+
+    private fun initGetData() = with(binding) {
+        val receivedList = intent.getStringArrayListExtra("userInputList")
+        if (receivedList != null) {
+            tvMainNick.text = receivedList[2].toString()
+            tvIdData.text = receivedList[0].toString()
+            tvNickData.text = receivedList[2].toString()
+            tvMbtiData.text = receivedList[3].toString()
+        }
     }
 }
