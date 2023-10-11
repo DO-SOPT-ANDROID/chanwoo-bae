@@ -2,6 +2,7 @@ package org.sopt.dosopttemplate
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
@@ -50,6 +51,7 @@ class SignUpActivity : AppCompatActivity() {
         intent.putStringArrayListExtra("userInputList", ArrayList(userInputList))
         // LoginActivity로 결과를 반환
         setResult(RESULT_OK, intent)
+        Toast.makeText(this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show()
         // 결과 반환 후 현재 액티비티 종료
         finish()
     }
