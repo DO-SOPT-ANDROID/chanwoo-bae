@@ -25,12 +25,12 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 로그인 버튼 클릭
+        initLoginBtn(ArrayList())
         // siginUp activity와 쌍방향 데이터 전달 콜백 함수
         initRegister()
         // 회원가입 버튼 클릭
-        initSignUp()
-        // 로그인 버튼 클릭
-        initLoginBtn(ArrayList())
+        initSignUpBtn()
     }
 
     private fun initLoginBtn(receivedList: ArrayList<String>) = with(binding) {
@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun initSignUp() {
+    private fun initSignUpBtn() {
         binding.tvSignIn.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             resultLauncher.launch(intent)
