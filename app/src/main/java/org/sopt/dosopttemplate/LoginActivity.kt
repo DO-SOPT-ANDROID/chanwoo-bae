@@ -15,11 +15,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
-    //    상수 선언
-    companion object {
-        private const val USER_INPUT = "userInputList"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -81,5 +76,10 @@ class LoginActivity : AppCompatActivity() {
             msg,
             Snackbar.LENGTH_SHORT,
         ).show()
+    }
+
+    //    상수 선언
+    companion object {
+        private const val USER_INPUT = "userInputList"
     }
 }
