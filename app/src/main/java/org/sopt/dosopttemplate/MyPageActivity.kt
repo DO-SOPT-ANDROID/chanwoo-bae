@@ -2,13 +2,14 @@ package org.sopt.dosopttemplate
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.dosopttemplate.databinding.ActivityMainBinding
+import org.sopt.dosopttemplate.databinding.ActivityMyPageBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MyPageActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMyPageBinding
+    var name: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMyPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initGetData()

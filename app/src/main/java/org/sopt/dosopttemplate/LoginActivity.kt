@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendUserData(receivedList: ArrayList<String>) {
-        val intentLogin = Intent(this@LoginActivity, MainActivity::class.java)
+        val intentLogin = Intent(this@LoginActivity, MyPageActivity::class.java)
         intentLogin.putStringArrayListExtra(USER_INPUT, receivedList)
         startActivity(intentLogin)
     }
