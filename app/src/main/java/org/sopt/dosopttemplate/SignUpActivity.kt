@@ -1,7 +1,9 @@
 package org.sopt.dosopttemplate
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
@@ -17,6 +19,17 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initSignUp()
+
+        initHideKeyboard()
+    }
+
+    private fun initHideKeyboard() {
+        // Check if no view has focus:
+        // Only runs if there is a view that is currently focused
+        this.currentFocus?.let { view ->
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     private fun initSignUp() = with(binding) {
