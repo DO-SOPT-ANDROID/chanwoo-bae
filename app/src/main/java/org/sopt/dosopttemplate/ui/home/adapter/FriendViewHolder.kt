@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.ui.home
+package org.sopt.dosopttemplate.ui.home.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import org.sopt.dosopttemplate.data.home.Friend

@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.ui
+package org.sopt.dosopttemplate.ui.login
 
 import android.app.Activity
 import android.content.Intent
@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
+import org.sopt.dosopttemplate.ui.MyPageActivity
 import java.util.ArrayList
 
 class LoginActivity : AppCompatActivity() {

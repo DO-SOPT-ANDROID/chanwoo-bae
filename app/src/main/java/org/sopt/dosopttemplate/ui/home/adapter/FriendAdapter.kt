@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.ui.home
+package org.sopt.dosopttemplate.ui.home.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context

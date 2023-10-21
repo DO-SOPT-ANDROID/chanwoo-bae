@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.ui
+package org.sopt.dosopttemplate.ui.login
 
 import android.content.Context
 import android.content.Intent
