@@ -15,13 +15,14 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*val currentFragment = supportFragmentManager.findFragmentById(R.id.fcv_home)
-        if (currentFragment == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fcv_home, HomeFragment())
-                .commit()
-        }*/
+        initHomeBottomSelected()
         initClickBottomNavigation()
+    }
+
+    // 처음에 가운데 홈 화면이 눌려 있도록 설정
+    private fun initHomeBottomSelected() {
+        binding.bnvHome.selectedItemId = R.id.menu_home
+        replaceFragment(HomeFragment())
     }
 
     private fun initClickBottomNavigation() {
