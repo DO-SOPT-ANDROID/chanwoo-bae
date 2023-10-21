@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate
+package org.sopt.dosopttemplate.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,6 @@ import org.sopt.dosopttemplate.databinding.ActivityMyPageBinding
 
 class MyPageActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyPageBinding
-    var name: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMyPageBinding.inflate(layoutInflater)
