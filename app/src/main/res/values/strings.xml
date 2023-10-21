@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">DoSoptTemplate</string>
     <string name="sign_in"><u>회원가입</u></string>
+    <string name="str_menu_do_android">DO ANDROID</string>
+    <string name="str_menu_home">홈</string>
+    <string name="str_menu_mypage">마이 페이지</string>
 </resources>
