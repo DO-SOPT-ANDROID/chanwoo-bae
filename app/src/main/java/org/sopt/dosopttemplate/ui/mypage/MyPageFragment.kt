@@ -1,6 +1,7 @@
 package org.sopt.dosopttemplate.ui.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +18,26 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         _binding = FragmentMyPageBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initGetData()
+    }
+
+    private fun initGetData() = with(binding) {
+        val receivedList = arguments?.getStringArrayList("userInputList")
+        if (receivedList != null) {
+            tvMainNick.text = receivedList[2].toString()
+            tvIdData.text = receivedList[0].toString()
+            tvNickData.text = receivedList[2].toString()
+            tvMbtiData.text = receivedList[3].toString()
+        } else {
+            Log.d("nullcheck", "null")
+        }
     }
 
     override fun onDestroyView() {
