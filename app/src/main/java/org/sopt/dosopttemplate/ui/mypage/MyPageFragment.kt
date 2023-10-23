@@ -1,11 +1,11 @@
 package org.sopt.dosopttemplate.ui.mypage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.FragmentMyPageBinding
 
 class MyPageFragment : Fragment() {
@@ -29,14 +29,12 @@ class MyPageFragment : Fragment() {
     }
 
     private fun initGetData() = with(binding) {
-        val receivedList = arguments?.getStringArrayList("userInputList")
+        val receivedList = UserInfo.userInfoList
         if (receivedList != null) {
-            tvMainNick.text = receivedList[2].toString()
-            tvIdData.text = receivedList[0].toString()
-            tvNickData.text = receivedList[2].toString()
-            tvMbtiData.text = receivedList[3].toString()
-        } else {
-            Log.d("nullcheck", "null")
+            tvMainNick.text = receivedList[2]
+            tvIdData.text = receivedList[0]
+            tvNickData.text = receivedList[2]
+            tvMbtiData.text = receivedList[3]
         }
     }
 

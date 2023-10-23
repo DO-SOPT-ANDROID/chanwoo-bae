@@ -7,8 +7,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
-import org.sopt.dosopttemplate.ui.MyPageActivity
+import org.sopt.dosopttemplate.ui.HomeActivity
 import java.util.ArrayList
 
 class LoginActivity : AppCompatActivity() {
@@ -37,8 +38,7 @@ class LoginActivity : AppCompatActivity() {
                 showSnackMessage("회원가입을 먼저 진행해 주세요")
             } else if (id == receivedList[0] && pwd == receivedList[1]) {
                 sendUserData(receivedList)
-                finish()/* editId.text = null
-                 editPwd.text = null*/
+                finish()
             } else {
                 showSnackMessage("ID와 password가 일치하지 않습니다")
             }
@@ -46,8 +46,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendUserData(receivedList: ArrayList<String>) {
-        val intentLogin = Intent(this@LoginActivity, MyPageActivity::class.java)
-        intentLogin.putStringArrayListExtra(USER_INPUT, receivedList)
+        val intentLogin = Intent(this@LoginActivity, HomeActivity::class.java)
+        UserInfo.userInfoList = receivedList
         startActivity(intentLogin)
     }
 
