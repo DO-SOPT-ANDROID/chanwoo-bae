@@ -11,17 +11,18 @@ import org.sopt.dosopttemplate.ui.mypage.MyPageFragment
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initHomeBottomSelected()
+        initFirstBottomSelected()
         initClickBottomNavigation()
     }
 
     // 처음에 가운데 홈 화면이 눌려 있도록 설정
-    private fun initHomeBottomSelected() {
+    private fun initFirstBottomSelected() {
         binding.bnvHome.selectedItemId = R.id.menu_home
         replaceFragment(HomeFragment())
     }
