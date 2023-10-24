@@ -30,7 +30,7 @@ class MyPageFragment : Fragment() {
 
     private fun initGetData() = with(binding) {
         val receivedList = UserInfo.userInfoList
-        if (receivedList != null) {
+        if (receivedList.size != 0) {
             tvMainNick.text = receivedList[2]
             tvIdData.text = receivedList[0]
             tvNickData.text = receivedList[2]
