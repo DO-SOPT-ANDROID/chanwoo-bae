@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
-import org.sopt.dosopttemplate.ui.home.adapter.FriendAdapter
+import org.sopt.dosopttemplate.ui.home.adapter.HomeMainAdapter
 
 class HomeFragment : Fragment() {
 
@@ -29,9 +30,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val friendAdapter = FriendAdapter(requireContext())
-        binding.rvFriends.adapter = friendAdapter
-        friendAdapter.setFriendList(viewModel.mockFriendList)
+        initRecyclerView()
+    }
+
+    private fun initRecyclerView() {
+        // 전체 멀티뷰 item 리스트 초기화
+        val homeItemsList = homeSealedItems()
+        // adapter 초기화
+        val homeAdapter = HomeMainAdapter(requireContext())
+        binding.rvFriends.adapter = homeAdapter
+        homeAdapter.items = homeItemsList
+    }
+
+    // sealedItem과 viewModel의 더미데이터 결합
+    private fun homeSealedItems(): MutableList<HomeSealedItem> {
+        val homeItemsList = mutableListOf<HomeSealedItem>()
+        homeItemsList.addAll(viewModel.mockProfileList + viewModel.mockFriendList)
+        return homeItemsList
     }
 
     override fun onDestroyView() {
