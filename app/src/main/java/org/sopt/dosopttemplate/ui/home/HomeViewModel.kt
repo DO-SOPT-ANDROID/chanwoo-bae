@@ -25,20 +25,32 @@ class HomeViewModel : ViewModel() {
         HomeSealedItem.Birthday(
             profileImage = R.drawable.gingerbread,
             name = "손명지",
-            self_description = "aaaa",
+            self_description = "aaaazzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
             date = "2023-10-24",
         ),
         HomeSealedItem.Birthday(
             profileImage = R.drawable.gingerbread,
             name = "최민영",
-            self_description = "",
+            self_description = "안녕안녕",
             date = "2023-10-26",
         ),
         HomeSealedItem.Birthday(
             profileImage = R.drawable.gingerbread,
             name = "배찬우",
-            self_description = "",
+            self_description = "ㅁㅁㅁㅁ",
             date = "2023-10-25",
+        ),
+        HomeSealedItem.Birthday(
+            profileImage = R.drawable.gingerbread,
+            name = "전성기 시절 파트장",
+            self_description = "꼼짝마 손들어zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+            date = "2023-01-15",
+        ),
+        HomeSealedItem.Birthday(
+            profileImage = R.drawable.gingerbread,
+            name = "손흥민",
+            self_description = "ㅁㅁㅁㅁ",
+            date = "2023-04-16",
         ),
     )
 
