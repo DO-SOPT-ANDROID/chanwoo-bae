@@ -4,6 +4,10 @@ import androidx.annotation.DrawableRes
 
 sealed class HomeSealedItem {
 
+    data class TitleLine(
+        val title: String,
+    ) : HomeSealedItem()
+
     data class MyProfile(
         @DrawableRes val myProfileImg: Int,
         val myName: String,
