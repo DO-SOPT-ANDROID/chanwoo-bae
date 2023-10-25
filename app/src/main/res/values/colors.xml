@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#a653ec</color>
     <color name="white_gray">#efefef</color>
+    <color name="line_divider">#E0E0E0</color>
+    <color name="tv_title_gray">#7F7F7F</color>
 </resources>
