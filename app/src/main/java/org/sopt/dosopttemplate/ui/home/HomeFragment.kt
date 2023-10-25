@@ -1,5 +1,6 @@
 package org.sopt.dosopttemplate.ui.home
 
+import DateUtils
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
 import org.sopt.dosopttemplate.ui.home.adapter.HomeMainAdapter
+import java.time.LocalDate
 
 class HomeFragment : Fragment() {
 
@@ -58,19 +60,33 @@ class HomeFragment : Fragment() {
     }
 
     private fun addBirthList(homeItemsList: MutableList<HomeSealedItem>) {
-        // 오늘 어제 순으로 생일 비교 후 리싀트 정렬
-        val sortedBirthList = viewModel.mockBirthList.sortedWith(
+        val today = LocalDate.now()
+        val yesterday = today.minusDays(1)
+
+        // 오늘 어제 생일인 사람만 필터링
+        val filteredBirthList = viewModel.mockBirthList.filter {
+            if (it.date.isNotEmpty()) {
+                val date = LocalDate.parse(it.date, DateUtils.dateFormatter)
+                date == today || date == yesterday
+            } else {
+                false
+            }
+        }
+
+        // 오늘 어제 순으로 생일 비교 후 리스트 정렬
+        val sortedBirthList = filteredBirthList.sortedWith(
             compareBy({
                 DateUtils.getDateOrder(it.date)
             }, { it.date }),
         )
+
         homeItemsList.add(HomeSealedItem.TitleLine("생일인 친구"))
         homeItemsList.addAll(sortedBirthList)
     }
 
     private fun addFriendList(homeItemsList: MutableList<HomeSealedItem>) {
         homeItemsList.add(HomeSealedItem.TitleLine("친구"))
-        homeItemsList.addAll(viewModel.mockFriendList)
+        homeItemsList.addAll(viewModel.mockBirthList)
     }
 
     override fun onDestroyView() {
