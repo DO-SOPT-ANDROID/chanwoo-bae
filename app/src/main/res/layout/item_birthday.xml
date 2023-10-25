@@ -26,13 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="@id/img_profile"
-        app:layout_constraintEnd_toStartOf="@id/cv_green"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/img_profile"
-        app:layout_constraintTop_toTopOf="@id/img_profile"
-        app:layout_constraintVertical_chainStyle="packed">
+        app:layout_constraintTop_toTopOf="@id/img_profile">
 
         <TextView
             android:id="@+id/tv_name"
@@ -41,6 +37,7 @@
             android:layout_marginEnd="20dp"
             android:textSize="16sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_birth_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -57,19 +54,83 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/guideline"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cv_green"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@id/const_tv_left"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_green"
+        android:id="@+id/cv_red"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="visible"
         app:cardCornerRadius="24dp"
         app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@id/const_tv_left"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/const_tv_left"
+        app:layout_constraintTop_toTopOf="@id/const_tv_left"
+        app:strokeColor="@color/cv_birthday_red"
+        app:strokeWidth="1dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp">
+
+            <TextView
+                android:id="@+id/tv_go_gift"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="1"
+                android:text="선물하기"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="14dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/icon_gift_red_24"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_go_gift"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="visible"
+        app:cardCornerRadius="24dp"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintBottom_toBottomOf="@id/const_tv_left"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline"
         app:layout_constraintTop_toTopOf="@id/const_tv_left"
         app:strokeColor="@color/cv_melon_green"
         app:strokeWidth="1dp">
@@ -84,7 +145,7 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="5dp"
             android:textSize="14sp"
-            tools:text="간략한 자기소개입니다. 가나다라마바사아자차카aaaaaaaaaaaaaaaaaaa" />
+            tools:text="hkj aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
     </com.google.android.material.card.MaterialCardView>
 
