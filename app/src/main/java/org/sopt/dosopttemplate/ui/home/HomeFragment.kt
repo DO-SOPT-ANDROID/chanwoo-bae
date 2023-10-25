@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
     private fun initRecyclerView() {
         // 전체 멀티뷰 item 리스트 초기화
         val homeItemsList = homeSealedItems()
+
         // adapter 초기화
         val homeAdapter = HomeMainAdapter(requireContext())
         binding.rvFriends.adapter = homeAdapter
@@ -46,15 +47,30 @@ class HomeFragment : Fragment() {
     private fun homeSealedItems(): MutableList<HomeSealedItem> {
         val homeItemsList = mutableListOf<HomeSealedItem>()
 
+        // 프로필 추가
         homeItemsList.addAll(viewModel.mockProfileList)
-
-        homeItemsList.add(HomeSealedItem.TitleLine("생일인 친구"))
-        homeItemsList.addAll(viewModel.mockFriendList)
-
-        homeItemsList.add(HomeSealedItem.TitleLine("친구"))
-        homeItemsList.addAll(viewModel.mockFriendList)
+        // 생일인 사람 리스트 추가
+        addBirthList(homeItemsList)
+        // 친구 리스트 추가
+        addFriendList(homeItemsList)
 
         return homeItemsList
+    }
+
+    private fun addBirthList(homeItemsList: MutableList<HomeSealedItem>) {
+        // 오늘 어제 순으로 생일 비교 후 리싀트 정렬
+        val sortedBirthList = viewModel.mockBirthList.sortedWith(
+            compareBy({
+                DateUtils.getDateOrder(it.date)
+            }, { it.date }),
+        )
+        homeItemsList.add(HomeSealedItem.TitleLine("생일인 친구"))
+        homeItemsList.addAll(sortedBirthList)
+    }
+
+    private fun addFriendList(homeItemsList: MutableList<HomeSealedItem>) {
+        homeItemsList.add(HomeSealedItem.TitleLine("친구"))
+        homeItemsList.addAll(viewModel.mockFriendList)
     }
 
     override fun onDestroyView() {
