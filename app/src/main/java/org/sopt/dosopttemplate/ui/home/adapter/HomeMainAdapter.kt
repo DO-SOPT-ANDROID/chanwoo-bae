@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import org.sopt.dosopttemplate.data.home.HomeSealedItem
+import org.sopt.dosopttemplate.databinding.ItemBirthdayBinding
 import org.sopt.dosopttemplate.databinding.ItemFriendBinding
 import org.sopt.dosopttemplate.databinding.ItemMyProfileBinding
 import org.sopt.dosopttemplate.databinding.ItemTitleLineBinding
@@ -20,6 +21,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
         const val PROFILE_VIEW = 0
         const val FRIEND_VIEW = 1
         const val TITLE_LINE_VIEW = 2
+        const val BIRTHDAY_VIEW = 3
     }
 
     // HomeSealedItem을 타입으로 가지는 items 리스트 선언.
@@ -49,6 +51,11 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
                 TitleLineViewHolder(titleLineBinding) // 타이틀 라인 뷰 홀더 생성
             }
 
+            BIRTHDAY_VIEW -> {
+                val birthDayBinding = ItemBirthdayBinding.inflate(inflater, parent, false)
+                BirthdayViewHolder(birthDayBinding) // 타이틀 라인 뷰 홀더 생성
+            }
+
             else -> throw IllegalArgumentException("invalid item type")
         }
     }
@@ -60,6 +67,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
             is ProfileViewHolder -> holder.onBind(items[position] as HomeSealedItem.MyProfile)
             is FriendViewHolder -> holder.onBind(items[position] as HomeSealedItem.Friend)
             is TitleLineViewHolder -> holder.onBind(items[position] as HomeSealedItem.TitleLine)
+            is BirthdayViewHolder -> holder.onBind(items[position] as HomeSealedItem.Birthday)
         }
     }
 
@@ -73,6 +81,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
             is HomeSealedItem.MyProfile -> PROFILE_VIEW
             is HomeSealedItem.Friend -> FRIEND_VIEW
             is HomeSealedItem.TitleLine -> TITLE_LINE_VIEW
+            is HomeSealedItem.Birthday -> BIRTHDAY_VIEW
             else -> throw IllegalArgumentException("invalid item type")
         }
     }
