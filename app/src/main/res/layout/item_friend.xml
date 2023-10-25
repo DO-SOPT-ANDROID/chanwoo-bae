@@ -1,16 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:paddingVertical="10dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_profile"
         android:layout_width="50dp"
         android:layout_height="0dp"
-        android:background="@color/white_gray"
+        android:background="@color/iv_kakao_whiteblue"
         android:scaleType="centerCrop"
         android:src="@drawable/gingerbread"
         app:layout_constraintDimensionRatio="1"
@@ -23,27 +22,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="20dp"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/img_profile"
+        app:layout_constraintEnd_toStartOf="@id/cv_green"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toEndOf="@id/img_profile"
         app:layout_constraintTop_toTopOf="@id/img_profile"
         tools:text="이름" />
 
-    <TextView
-        android:id="@+id/tv_self_description"
-        android:layout_width="0dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_green"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ellipsize="end"
-        android:gravity="end|center_vertical"
-        android:maxLines="1"
-        android:textSize="14sp"
+        app:cardCornerRadius="24dp"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toBottomOf="@id/tv_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_name"
         app:layout_constraintTop_toTopOf="@id/tv_name"
-        tools:text="간략한 자기소개입니다. 가나다라마바사아자차카" />
+        app:strokeColor="@color/cv_melon_green"
+        app:strokeWidth="1dp">
 
+        <TextView
+            android:id="@+id/tv_self_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:textSize="14sp"
+            tools:text="간략한 자기소개입니다. 가나다라마바사아자차카aaaaaaaaaaaaaaaaaaa" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
