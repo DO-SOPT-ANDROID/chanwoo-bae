@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemFriendBinding
 import org.sopt.dosopttemplate.databinding.ItemMyProfileBinding
+import org.sopt.dosopttemplate.databinding.ItemTitleLineBinding
 import java.lang.IllegalArgumentException
 
 class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,6 +19,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
     companion object {
         const val PROFILE_VIEW = 0
         const val FRIEND_VIEW = 1
+        const val TITLE_LINE_VIEW = 2
     }
 
     // HomeSealedItem을 타입으로 가지는 items 리스트 선언.
@@ -42,6 +44,11 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
                 FriendViewHolder(friendBinding) // 친구 뷰 홀더 생성
             }
 
+            TITLE_LINE_VIEW -> {
+                val titleLineBinding = ItemTitleLineBinding.inflate(inflater, parent, false)
+                TitleLineViewHolder(titleLineBinding) // 타이틀 라인 뷰 홀더 생성
+            }
+
             else -> throw IllegalArgumentException("invalid item type")
         }
     }
@@ -52,6 +59,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
         when (holder) {
             is ProfileViewHolder -> holder.onBind(items[position] as HomeSealedItem.MyProfile)
             is FriendViewHolder -> holder.onBind(items[position] as HomeSealedItem.Friend)
+            is TitleLineViewHolder -> holder.onBind(items[position] as HomeSealedItem.TitleLine)
         }
     }
 
@@ -64,6 +72,7 @@ class HomeMainAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.View
         return when (items[position]) {
             is HomeSealedItem.MyProfile -> PROFILE_VIEW
             is HomeSealedItem.Friend -> FRIEND_VIEW
+            is HomeSealedItem.TitleLine -> TITLE_LINE_VIEW
             else -> throw IllegalArgumentException("invalid item type")
         }
     }
