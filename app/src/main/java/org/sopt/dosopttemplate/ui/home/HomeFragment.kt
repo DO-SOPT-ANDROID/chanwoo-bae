@@ -45,7 +45,15 @@ class HomeFragment : Fragment() {
     // sealedItem과 viewModel의 더미데이터 결합
     private fun homeSealedItems(): MutableList<HomeSealedItem> {
         val homeItemsList = mutableListOf<HomeSealedItem>()
-        homeItemsList.addAll(viewModel.mockProfileList + viewModel.mockFriendList)
+
+        homeItemsList.addAll(viewModel.mockProfileList)
+
+        homeItemsList.add(HomeSealedItem.TitleLine("생일인 친구"))
+        homeItemsList.addAll(viewModel.mockFriendList)
+
+        homeItemsList.add(HomeSealedItem.TitleLine("친구"))
+        homeItemsList.addAll(viewModel.mockFriendList)
+
         return homeItemsList
     }
 
