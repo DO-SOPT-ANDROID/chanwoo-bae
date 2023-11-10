@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate
+package org.sopt.dosopttemplate.ui.login
 
 import android.app.Activity
 import android.content.Intent
@@ -7,7 +7,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
+import org.sopt.dosopttemplate.ui.HomeActivity
 import java.util.ArrayList
 
 class LoginActivity : AppCompatActivity() {
@@ -15,22 +17,17 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
 
-    //    상수 선언
-    companion object {
-        private const val USER_INPUT = "userInputList"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 로그인 버튼 클릭
+        initLoginBtn(ArrayList())
         // siginUp activity와 쌍방향 데이터 전달 콜백 함수
         initRegister()
         // 회원가입 버튼 클릭
-        initSignUp()
-        // 로그인 버튼 클릭
-        initLoginBtn(ArrayList())
+        initSignUpBtn()
     }
 
     private fun initLoginBtn(receivedList: ArrayList<String>) = with(binding) {
@@ -41,8 +38,7 @@ class LoginActivity : AppCompatActivity() {
                 showSnackMessage("회원가입을 먼저 진행해 주세요")
             } else if (id == receivedList[0] && pwd == receivedList[1]) {
                 sendUserData(receivedList)
-                finish()/* editId.text = null
-                 editPwd.text = null*/
+                finish()
             } else {
                 showSnackMessage("ID와 password가 일치하지 않습니다")
             }
@@ -50,8 +46,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun sendUserData(receivedList: ArrayList<String>) {
-        val intentLogin = Intent(this@LoginActivity, MainActivity::class.java)
-        intentLogin.putStringArrayListExtra(USER_INPUT, receivedList)
+        val intentLogin = Intent(this@LoginActivity, HomeActivity::class.java)
+        UserInfo.userInfoList = receivedList
         startActivity(intentLogin)
     }
 
@@ -68,7 +64,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun initSignUp() {
+    private fun initSignUpBtn() {
         binding.tvSignIn.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             resultLauncher.launch(intent)
@@ -81,5 +77,10 @@ class LoginActivity : AppCompatActivity() {
             msg,
             Snackbar.LENGTH_SHORT,
         ).show()
+    }
+
+    //    상수 선언
+    companion object {
+        private const val USER_INPUT = "userInputList"
     }
 }

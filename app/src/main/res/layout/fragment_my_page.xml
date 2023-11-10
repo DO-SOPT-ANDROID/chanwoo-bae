@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp"
-    tools:context=".MainActivity">
+    android:padding="30dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/img_top"
@@ -22,8 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
-            android:src="@drawable/gingerbread"
-            app:layout_constraintDimensionRatio="1:1" />
+            android:src="@drawable/gingerbread" />
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -32,20 +30,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="닉네임"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/img_top"
         app:layout_constraintStart_toEndOf="@+id/img_top"
-        app:layout_constraintTop_toTopOf="@+id/img_top" />
+        app:layout_constraintTop_toTopOf="@+id/img_top"
+        tools:text="닉네임" />
 
     <TextView
         android:id="@+id/tv_introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="님의 페이지 입니다"
+        android:text="@string/str_tv_introduce"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_main_nick"
         app:layout_constraintStart_toEndOf="@+id/tv_main_nick"
@@ -56,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="ID"
+        android:text="@string/str_tv_id"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -68,18 +66,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="cw8881"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_id" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_id"
+        tools:text="cw8881" />
 
     <TextView
         android:id="@+id/tv_nick"
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="닉네임"
+        android:text="@string/str_tv_nick"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -91,17 +88,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="cw8881"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_nick" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_nick"
+        tools:text="cw8881" />
 
     <TextView
         android:id="@+id/tv_mbti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="MBTI"
+        android:text="@string/str_tv_mbti"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -113,9 +110,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="infp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mbti" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_mbti"
+        tools:text="infp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
