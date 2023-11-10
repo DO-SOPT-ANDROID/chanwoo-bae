@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemCarouselBinding
 
-class CarouselAdapter(context: Context) :
-    ListAdapter<HomeSealedItem.Birthday, CarouselAdapter.CarouseViewHolder>(diffUtil) {
+class CarouselHeroAdapter(context: Context) :
+    ListAdapter<HomeSealedItem.Birthday, CarouselHeroAdapter.CarouseViewHolder>(diffUtil) {
     private val inflater by lazy { LayoutInflater.from(context) }
 
     inner class CarouseViewHolder(private val binding: ItemCarouselBinding) :
