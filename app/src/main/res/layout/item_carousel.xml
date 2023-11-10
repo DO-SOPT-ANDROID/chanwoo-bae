@@ -4,13 +4,13 @@
     android:id="@+id/carousel_item_container"
     android:layout_width="150dp"
     android:layout_height="match_parent"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
     android:foreground="?attr/selectableItemBackground"
     app:shapeAppearance="?attr/shapeAppearanceCornerExtraLarge">
 
     <ImageView
-        android:background="@color/iv_kakao_whiteblue"
+        android:background="@color/white"
         android:id="@+id/img_carousel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
