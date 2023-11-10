@@ -20,12 +20,12 @@ class BirthdayViewHolder(private val binding: ItemBirthdayBinding) :
 
         when (DateUtils.getDateOrder(birthData.date)) {
             0 -> {
-                cvRedVisibility()
+                cvBirthViewVisibility()
                 tvBirthDate.text = "오늘 ${date.format(formatter)}"
             }
 
             1 -> {
-                cvRedVisibility()
+                cvBirthViewVisibility()
                 tvBirthDate.text = "어제 ${date.format(formatter)}"
             }
 
@@ -43,7 +43,7 @@ class BirthdayViewHolder(private val binding: ItemBirthdayBinding) :
         }
     }
 
-    private fun ItemBirthdayBinding.cvRedVisibility() {
+    private fun ItemBirthdayBinding.cvBirthViewVisibility() {
         cvGreen.visibility = View.GONE
         cvRed.visibility = View.VISIBLE
     }
