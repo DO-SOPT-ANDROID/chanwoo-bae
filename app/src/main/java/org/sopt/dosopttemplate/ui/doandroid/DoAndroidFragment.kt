@@ -10,7 +10,8 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.carousel.HeroCarouselStrategy
 import org.sopt.dosopttemplate.databinding.FragmentDoAndroidBinding
-import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselAdapter
+import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselHeroAdapter
+import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselOriginalAdapter
 import org.sopt.dosopttemplate.ui.home.HomeViewModel
 
 class DoAndroidFragment : Fragment() {
@@ -33,17 +34,25 @@ class DoAndroidFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initCarouselRecyclerView()
+        initHeroCarousel()
+        initIntroduceCarousel()
     }
 
-    private fun initCarouselRecyclerView() {
-        val carouselAdapter = CarouselAdapter(requireContext())
-        binding.carouselRecyclerView.adapter = carouselAdapter
-        binding.carouselRecyclerView.layoutManager = CarouselLayoutManager(HeroCarouselStrategy())
+    private fun initHeroCarousel() = with(binding) {
+        val carouselAdapter = CarouselHeroAdapter(requireContext())
+        carouselHeroView.adapter = carouselAdapter
+        carouselHeroView.layoutManager = CarouselLayoutManager(HeroCarouselStrategy())
         carouselAdapter.setCarouselList(viewModel.mockBirthList)
 
         val snapHelper = CarouselSnapHelper()
-        snapHelper.attachToRecyclerView(binding.carouselRecyclerView)
+        snapHelper.attachToRecyclerView(carouselHeroView)
+    }
+
+    private fun initIntroduceCarousel() = with(binding) {
+        val carouselOriginalAdapter = CarouselOriginalAdapter(requireContext())
+        carouselOriginalView.adapter = carouselOriginalAdapter
+        carouselOriginalView.layoutManager = CarouselLayoutManager()
+        carouselOriginalAdapter.setCarouselList(viewModel.mockFriendList)
     }
 
     override fun onDestroyView() {
