@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.ui.home.adapter
+package org.sopt.dosopttemplate.ui.home.adapter.viewholder
 
 import DateUtils
 import android.view.View
