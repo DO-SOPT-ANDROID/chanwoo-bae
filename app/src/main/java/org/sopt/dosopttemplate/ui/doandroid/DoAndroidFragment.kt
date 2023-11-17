@@ -1,6 +1,7 @@
 package org.sopt.dosopttemplate.ui.doandroid
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +11,21 @@ import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.carousel.HeroCarouselStrategy
 import org.sopt.dosopttemplate.databinding.FragmentDoAndroidBinding
+import org.sopt.dosopttemplate.network.doandroid.ResponseReqresDto
+import org.sopt.dosopttemplate.network.reqresApiFactory.ServicePool.reqresService
 import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselHeroAdapter
-import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselOriginalAdapter
+import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselUserAdapter
 import org.sopt.dosopttemplate.ui.home.HomeViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DoAndroidFragment : Fragment() {
     private var _binding: FragmentDoAndroidBinding? = null
 
     private val viewModel by viewModels<HomeViewModel>()
+
+    private lateinit var carouselOriginalAdapter: CarouselUserAdapter
 
     private val binding: FragmentDoAndroidBinding
         get() = requireNotNull(_binding)
@@ -35,7 +43,31 @@ class DoAndroidFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initHeroCarousel()
-        initIntroduceCarousel()
+        initReqresCarousel()
+        initUserApi()
+    }
+
+    private fun initUserApi() {
+        reqresService.getUserList(1).enqueue(object : Callback<ResponseReqresDto> {
+            override fun onResponse(
+                call: Call<ResponseReqresDto>,
+                response: Response<ResponseReqresDto>,
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()!!
+
+                    data.let {
+                        carouselOriginalAdapter.setCarouselList(it.data)
+                    }
+                } else {
+                    Log.d("userlist", "fail")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseReqresDto>, t: Throwable) {
+                Log.e("doandroid", "Error: ${t.message}")
+            }
+        })
     }
 
     private fun initHeroCarousel() = with(binding) {
@@ -48,11 +80,10 @@ class DoAndroidFragment : Fragment() {
         snapHelper.attachToRecyclerView(carouselHeroView)
     }
 
-    private fun initIntroduceCarousel() = with(binding) {
-        val carouselOriginalAdapter = CarouselOriginalAdapter(requireContext())
+    private fun initReqresCarousel() = with(binding) {
+        carouselOriginalAdapter = CarouselUserAdapter(requireContext())
         carouselOriginalView.adapter = carouselOriginalAdapter
         carouselOriginalView.layoutManager = CarouselLayoutManager()
-        carouselOriginalAdapter.setCarouselList(viewModel.mockFriendList)
     }
 
     override fun onDestroyView() {
