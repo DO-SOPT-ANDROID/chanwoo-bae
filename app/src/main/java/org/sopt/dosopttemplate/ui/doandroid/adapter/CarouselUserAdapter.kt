@@ -6,17 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
+import com.bumptech.glide.Glide
 import org.sopt.dosopttemplate.databinding.ItemCarouselIntroduceBinding
+import org.sopt.dosopttemplate.network.doandroid.ResponseReqresDto
 
-class CarouselOriginalAdapter(context: Context) :
-    ListAdapter<HomeSealedItem.Friend, CarouselOriginalAdapter.CarouseViewHolder>(diffUtil) {
+class CarouselUserAdapter(context: Context) :
+    ListAdapter<ResponseReqresDto.Data, CarouselUserAdapter.CarouseViewHolder>(diffUtil) {
     private val inflater by lazy { LayoutInflater.from(context) }
 
     inner class CarouseViewHolder(private val binding: ItemCarouselIntroduceBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: HomeSealedItem.Friend) {
-            binding.imgCarousel.setImageResource(data.profileImage)
+        fun bind(data: ResponseReqresDto.Data) {
+            Glide.with(itemView)
+                .load(data.avatar)
+                .into(binding.imgCarousel)
+            binding.textCarousel.text = "${data.first_name} ${data.last_name}"
         }
     }
 
@@ -32,23 +36,23 @@ class CarouselOriginalAdapter(context: Context) :
     override fun getItemCount() = currentList.size
 
     // submitList 사용
-    fun setCarouselList(imgList: List<HomeSealedItem.Friend>) {
+    fun setCarouselList(imgList: List<ResponseReqresDto.Data>) {
         submitList(imgList.toMutableList())
     }
 
     // diffUtill callback
     companion object {
-        private var diffUtil = object : DiffUtil.ItemCallback<HomeSealedItem.Friend>() {
+        private var diffUtil = object : DiffUtil.ItemCallback<ResponseReqresDto.Data>() {
             override fun areItemsTheSame(
-                oldItem: HomeSealedItem.Friend,
-                newItem: HomeSealedItem.Friend,
+                oldItem: ResponseReqresDto.Data,
+                newItem: ResponseReqresDto.Data,
             ): Boolean {
-                return oldItem.profileImage == newItem.profileImage
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: HomeSealedItem.Friend,
-                newItem: HomeSealedItem.Friend,
+                oldItem: ResponseReqresDto.Data,
+                newItem: ResponseReqresDto.Data,
             ): Boolean {
                 return oldItem == newItem
             }
