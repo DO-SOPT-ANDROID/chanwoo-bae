@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
                         response: Response<ResponseLoginDto>,
                     ) {
                         if (response.isSuccessful) {
-                            val data = response.body()!!
+                            val data = response.body() ?: return
                             val userId = data.id
                             toast("로그인이 성공하였고 유저의 ID는 $userId 입니둥")
                             val intent = Intent(this@LoginActivity, HomeActivity::class.java)

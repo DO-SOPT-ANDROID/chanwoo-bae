@@ -54,7 +54,7 @@ class DoAndroidFragment : Fragment() {
                 response: Response<ResponseReqresDto>,
             ) {
                 if (response.isSuccessful) {
-                    val data = response.body()!!
+                    val data = response.body() ?: return
 
                     data.let {
                         carouselOriginalAdapter.setCarouselList(it.data)
