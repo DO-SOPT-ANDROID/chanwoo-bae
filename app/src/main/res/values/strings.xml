@@ -9,4 +9,8 @@
     <string name="str_tv_nick">닉네임</string>
     <string name="str_tv_mbti">MBTI</string>
     <string name="wellcome_to_ndo_sopt_world">Wellcome To\nDo Sopt World!</string>
+    <string name="toast_sever_error">서버 에러 발생</string>
+    <string name="toast_id_password_validate">아이디와 패스워드가 일치 하지 않습니다.</string>
+    <string name="toast_signUp_compeleted">회원가입이 완료되었습니다</string>
+    <string name="toast_signUp_fail">회원가입 실패</string>
 </resources>

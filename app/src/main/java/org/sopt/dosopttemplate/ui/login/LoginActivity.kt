@@ -4,17 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
+import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
 import org.sopt.dosopttemplate.network.login.RequestLoginDto
 import org.sopt.dosopttemplate.network.login.ResponseLoginDto
 import org.sopt.dosopttemplate.ui.HomeActivity
+import org.sopt.dosopttemplate.utils.toast
 import retrofit2.Call
 import retrofit2.Response
 
@@ -56,21 +56,17 @@ class LoginActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             val data = response.body()!!
                             val userId = data.id
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "로그인이 성공하였고 유저의 ID는 $userId 입니둥",
-                                Toast.LENGTH_SHORT,
-                            ).show()
+                            toast("로그인이 성공하였고 유저의 ID는 $userId 입니둥")
                             val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                             startActivity(intent)
                         } else {
-                            showSnackMessage("아이디와 패스워드가 일치 하지 않습니다.")
+                            toast(getString(R.string.toast_id_password_validate))
                             Log.e("LoginActivity", "Error: ${response.message()}")
                         }
                     }
 
                     override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-                        Toast.makeText(this@LoginActivity, "서버 에러 발생", Toast.LENGTH_SHORT).show()
+                        toast(getString(R.string.toast_sever_error))
                         Log.e("LoginActivity", "Error: ${t.message}")
                     }
                 },
@@ -102,14 +98,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
-    }
-
-    private fun showSnackMessage(msg: String) {
-        Snackbar.make(
-            binding.root,
-            msg,
-            Snackbar.LENGTH_SHORT,
-        ).show()
     }
 
     //    상수 선언

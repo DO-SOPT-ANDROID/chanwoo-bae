@@ -5,12 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
+import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
 import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
 import org.sopt.dosopttemplate.network.login.RequestSignUpDto
+import org.sopt.dosopttemplate.utils.snackBar
+import org.sopt.dosopttemplate.utils.toast
 import retrofit2.Call
 import retrofit2.Response
 
@@ -70,15 +71,14 @@ class SignUpActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
                     if (response.isSuccessful) {
                         sendUserData(userInputList)
-                        Toast.makeText(this@SignUpActivity, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT)
-                            .show()
+                        toast(getString(R.string.toast_signUp_compeleted))
                     } else {
-                        Toast.makeText(this@SignUpActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                        toast(getString(R.string.toast_signUp_fail))
                     }
                 }
 
                 override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    Toast.makeText(this@SignUpActivity, "네트워크 연결 오류", Toast.LENGTH_SHORT).show()
+                    toast(getString(R.string.toast_sever_error))
                     Log.e("SignUpActivity", "Error: ${t.message}")
                 }
             })
@@ -108,12 +108,6 @@ class SignUpActivity : AppCompatActivity() {
             snackList.add("MBTI는 4자여야 합니다.")
         }
 
-        val snackMessage = snackList.joinToString("\n")
-
-        Snackbar.make(
-            binding.root,
-            snackMessage,
-            Snackbar.LENGTH_SHORT,
-        ).show()
+        snackBar(binding.root, snackList.joinToString("\n"))
     }
 }
