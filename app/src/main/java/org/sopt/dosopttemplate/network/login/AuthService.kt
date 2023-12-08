@@ -1,14 +1,15 @@
 package org.sopt.dosopttemplate.network.login
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface AuthService {
     @POST("api/v1/members/sign-in")
-    fun login(
+    suspend fun login(
         @Body request: RequestLoginDto,
-    ): Call<ResponseLoginDto>
+    ): Response<ResponseLoginDto>
 
     @POST("api/v1/members")
     fun signUp(
