@@ -45,6 +45,9 @@ android {
 }
 
 dependencies {
+    // parcelize
+    apply plugin: 'kotlin-parcelize'
+
     // viewmodel 의존성 추가
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"
     implementation "androidx.fragment:fragment-ktx:1.6.1"
