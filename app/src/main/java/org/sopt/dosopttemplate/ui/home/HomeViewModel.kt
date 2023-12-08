@@ -10,7 +10,7 @@ class HomeViewModel : ViewModel() {
     val mockProfileList = listOf<HomeSealedItem.MyProfile>(
         HomeSealedItem.MyProfile(
             myProfileImg = R.drawable.gingerbread,
-            myName = if (UserInfo.userInfoList.size != 0) UserInfo.userInfoList[2] else "닉네임",
+            myName = UserInfo.userInfoList.nickName.ifEmpty { "닉네임" },
             my_description = "상태메시지 +",
         ),
     )
