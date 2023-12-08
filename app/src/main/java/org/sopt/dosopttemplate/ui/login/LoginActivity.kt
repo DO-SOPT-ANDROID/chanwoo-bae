@@ -1,107 +1,61 @@
 package org.sopt.dosopttemplate.ui.login
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
-import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
-import org.sopt.dosopttemplate.network.login.RequestLoginDto
-import org.sopt.dosopttemplate.network.login.ResponseLoginDto
 import org.sopt.dosopttemplate.ui.HomeActivity
 import org.sopt.dosopttemplate.utils.toast
-import retrofit2.Call
-import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val authViewModel by viewModels<AuthViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // LifeCycleOwner
+        initDataBinding()
         // 로그인 버튼 클릭
-        initLoginBtn(ArrayList())
-        // siginUp activity와 쌍방향 데이터 전달 콜백 함수
-        initRegister()
+        initLoginBtn()
         // 회원가입 버튼 클릭
         initSignUpBtn()
     }
 
-    private fun initLoginBtn(receivedList: ArrayList<String>) = with(binding) {
-        btnLogin.setOnClickListener {
-            val id = editId.text.toString()
-            val pwd = editPwd.text.toString()
+    private fun initDataBinding() {
+        binding.lifecycleOwner = this
+        binding.vm = authViewModel
+    }
 
-            authLogin(id, pwd)
+    private fun initLoginBtn() {
+        binding.btnLogin.setOnClickListener {
+            val id = binding.editId.text.toString()
+            val pwd = binding.editPwd.text.toString()
+
+            authViewModel.login(id = id, password = pwd)
         }
-    }
-
-    private fun authLogin(id: String, pwd: String) {
-        authService.login(RequestLoginDto(id, pwd))
-            .enqueue(
-                object : retrofit2.Callback<ResponseLoginDto> {
-                    override fun onResponse(
-                        call: Call<ResponseLoginDto>,
-                        response: Response<ResponseLoginDto>,
-                    ) {
-                        if (response.isSuccessful) {
-                            val data = response.body() ?: return
-                            val userId = data.id
-                            toast("로그인이 성공하였고 유저의 ID는 $userId 입니둥")
-                            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            toast(getString(R.string.toast_id_password_validate))
-                            Log.e("LoginActivity", "Error: ${response.message()}")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseLoginDto>, t: Throwable) {
-                        toast(getString(R.string.toast_sever_error))
-                        Log.e("LoginActivity", "Error: ${t.message}")
-                    }
-                },
-
-            )
-    }
-
-    private fun sendUserData(receivedList: ArrayList<String>) {
-        val intentLogin = Intent(this@LoginActivity, HomeActivity::class.java)
-        UserInfo.userInfoList = receivedList
-        startActivity(intentLogin)
-    }
-
-    private fun initRegister() {
-        resultLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK) {
-                    val data = result.data
-                    val receivedList = data?.getStringArrayListExtra(USER_INPUT)
-                    if (receivedList != null) {
-                        initLoginBtn(receivedList)
-                    }
-                }
-            }
+        observeLoginResult()
     }
 
     private fun initSignUpBtn() {
         binding.tvSignIn.setOnClickListener {
             val intent = Intent(this@LoginActivity, SignUpActivity::class.java)
-            resultLauncher.launch(intent)
+            startActivity(intent)
         }
     }
 
-    //    상수 선언
-    companion object {
-        private const val USER_INPUT = "userInputList"
+    private fun observeLoginResult() {
+        authViewModel.loginSuccess.observe(this) {
+            if (it) {
+                toast("로그인 성공")
+                startActivity(Intent(this, HomeActivity::class.java))
+            } else {
+                toast("로그인 실패")
+            }
+        }
     }
 }
