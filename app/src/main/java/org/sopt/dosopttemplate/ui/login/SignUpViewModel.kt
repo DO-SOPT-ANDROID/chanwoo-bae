@@ -10,6 +10,11 @@ class SignUpViewModel : ViewModel() {
     private val nickname = MutableLiveData<String>()
     private val mbti = MutableLiveData<String>()
 
+    private var isIdValid = false
+    private var isPasswordValid = false
+    private var isNickNameValid = false
+    private var isMbtiValid = false
+
     private val _isBtnSelected = MutableLiveData<Boolean>()
     val isBtnSelected: LiveData<Boolean>
         get() = _isBtnSelected
@@ -28,6 +33,11 @@ class SignUpViewModel : ViewModel() {
 
     private val nickNameLengthRegex = ".{4,10}".toRegex()
     private val mbtiRegex = "^[E|Iei][S|Nsn][T|Ftf][J|Pjp]$".toRegex()
+
+    init {
+        // ViewModel이 생성될 때 초기 값 설정
+        _isBtnSelected.value = false
+    }
 
     fun setID(id: String) {
         this.id.value = id
@@ -54,44 +64,30 @@ class SignUpViewModel : ViewModel() {
     }
 
     private fun validateId(id: String) {
-        idError.value = when {
-            !idLengthRegex.matches(id) -> "6자 이상 10자 이하여야 합니다."
-            !englishRegex.matches(id) -> MSG_ERROR_ENGLISH
-            !numberRegex.matches(id) -> MSG_ERROR_NUM
-            else -> ""
-        }
+        isIdValid = idLengthRegex.matches(id) && englishRegex.matches(id) && numberRegex.matches(id)
+        idError.value = if (!isIdValid) "6자 이상 10자 이내\n영문과 숫자를 포함해야 합니다." else ""
     }
 
     private fun validatePassword(password: String) {
-        passwordError.value = when {
-            !pwdLengthRegex.matches(password) -> "6자 이상 12자 이하여야 합니다"
-            !englishRegex.matches(password) -> MSG_ERROR_ENGLISH
-            !numberRegex.matches(password) -> MSG_ERROR_NUM
-            !specialLetter.matches(password) -> "특수 문자를 포함하여야 합니다."
-            else -> ""
-        }
+        isPasswordValid = pwdLengthRegex.matches(password) && englishRegex.matches(password) &&
+            numberRegex.matches(password) && specialLetter.matches(password)
+        passwordError.value =
+            if (!isPasswordValid) "6자 이상 12자 이내\n영문, 숫자, 특수문자를 포함해야 합니다." else ""
     }
 
     private fun validateNickName(inputNickname: String) {
+        isNickNameValid = nickNameLengthRegex.matches(inputNickname)
         nickNameError.value =
-            if (nickNameLengthRegex.matches(inputNickname)) "" else "닉네임은 4자 이상 10자 이하여야 합니다."
+            if (!isNickNameValid) "4자 이상 10자 이내로 입력해야 합니다." else ""
     }
 
     private fun validateMbti(inputMbti: String) {
+        isMbtiValid = mbtiRegex.matches(inputMbti)
         mbtiError.value =
-            if (mbtiRegex.matches(inputMbti)) "" else "올바른 mbti를 입력하시오."
+            if (!isMbtiValid) "올바른 MBTI 형식이 아닙니다." else ""
     }
 
     private fun updateBtnValidity() {
-        _isBtnSelected.value =
-            idError.value.isNullOrEmpty() &&
-            passwordError.value.isNullOrEmpty() &&
-            nickNameError.value.isNullOrEmpty() &&
-            mbtiError.value.isNullOrEmpty()
-    }
-
-    companion object {
-        private const val MSG_ERROR_ENGLISH = "영문을 포함하여야 합니다."
-        private const val MSG_ERROR_NUM = "숫자를 포함하여야 합니다."
+        _isBtnSelected.value = isIdValid && isPasswordValid && isNickNameValid && isMbtiValid
     }
 }
