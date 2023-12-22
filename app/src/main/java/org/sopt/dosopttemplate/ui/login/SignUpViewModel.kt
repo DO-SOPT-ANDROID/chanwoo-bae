@@ -1,10 +1,22 @@
 package org.sopt.dosopttemplate.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import org.sopt.dosopttemplate.data.login.User
+import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
+import org.sopt.dosopttemplate.network.login.RequestSignUpDto
 
 class SignUpViewModel : ViewModel() {
+    private val _signUpState = MutableStateFlow<SignUpState>(SignUpState.Loading)
+    val signUpState: StateFlow<SignUpState> = _signUpState.asStateFlow()
+
     private val id = MutableLiveData<String>()
     private val password = MutableLiveData<String>()
     private val nickname = MutableLiveData<String>()
@@ -89,5 +101,27 @@ class SignUpViewModel : ViewModel() {
 
     private fun updateBtnValidity() {
         _isBtnSelected.value = isIdValid && isPasswordValid && isNickNameValid && isMbtiValid
+    }
+
+    fun signUpServer(userEntity: User) {
+        viewModelScope.launch {
+            kotlin.runCatching {
+                authService.signUp(
+                    RequestSignUpDto(
+                        userEntity.id,
+                        userEntity.pwd,
+                        userEntity.nickName,
+                    ),
+                )
+            }.onSuccess {
+                if (it.isSuccessful) {
+                    _signUpState.value = SignUpState.Success
+                } else {
+                    _signUpState.value = SignUpState.Error
+                }
+            }.onFailure {
+                Log.e("SignUpActivity", "Error: ${it.message}")
+            }
+        }
     }
 }

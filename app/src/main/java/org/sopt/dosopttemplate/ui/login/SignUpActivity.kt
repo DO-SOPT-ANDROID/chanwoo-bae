@@ -3,18 +3,15 @@ package org.sopt.dosopttemplate.ui.login
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.data.login.User
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
-import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
-import org.sopt.dosopttemplate.network.login.RequestSignUpDto
 import org.sopt.dosopttemplate.utils.toast
-import retrofit2.Call
-import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -36,35 +33,33 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
-    private fun initSignUp() = with(binding) {
-        btnLogin.setOnClickListener {
+    private fun initSignUp() {
+        binding.btnLogin.setOnClickListener {
             val userEntity = User(
-                id = editId.text.toString(),
-                pwd = editPwd.text.toString(),
-                nickName = editNickname.text.toString(),
-                mbti = editMbti.text.toString(),
+                id = binding.editId.text.toString(),
+                pwd = binding.editPwd.text.toString(),
+                nickName = binding.editNickname.text.toString(),
+                mbti = binding.editMbti.text.toString(),
             )
-            signUpServer(userEntity)
+            viewModel.signUpServer(userEntity)
+            observeSignUpState(userEntity)
         }
     }
 
-    private fun signUpServer(userEntity: User) {
-        authService.signUp(RequestSignUpDto(userEntity.id, userEntity.pwd, userEntity.mbti))
-            .enqueue(object : retrofit2.Callback<Unit> {
-                override fun onResponse(call: Call<Unit>, response: Response<Unit>) {
-                    if (response.isSuccessful) {
+    private fun observeSignUpState(userEntity: User) {
+        lifecycleScope.launch {
+            viewModel.signUpState.collect {
+                when (it) {
+                    is SignUpState.Success -> {
                         sendUserData(userEntity)
                         toast(getString(R.string.toast_signUp_compeleted))
-                    } else {
-                        toast(getString(R.string.toast_signUp_fail))
                     }
-                }
 
-                override fun onFailure(call: Call<Unit>, t: Throwable) {
-                    toast(getString(R.string.toast_sever_error))
-                    Log.e("SignUpActivity", "Error: ${t.message}")
+                    is SignUpState.Error -> toast(getString(R.string.toast_signUp_fail))
+                    is SignUpState.Loading -> toast("회원가입 중")
                 }
-            })
+            }
+        }
     }
 
     private fun sendUserData(userEntity: User) {
