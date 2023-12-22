@@ -31,8 +31,10 @@ class AuthViewModel : ViewModel() {
                     if (response != null) {
                         _loginState.value = LoginState.Success(response)
                         Log.d("server", _loginState.value.toString())
-                        UserInfo.userInfoList.nickName = response.username.toString()
-                        UserInfo.userInfoList.id = response.id.toString()
+                        UserInfo.updateUserInfo(
+                            id = response.id.toString(),
+                            nickName = response.nickname.toString(),
+                        )
                     }
                 } else {
                     _loginState.value = LoginState.Error
