@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.ui.HomeActivity
 import org.sopt.dosopttemplate.utils.toast
@@ -49,12 +51,17 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeLoginResult() {
-        authViewModel.loginSuccess.observe(this) {
-            if (it) {
-                toast("로그인 성공")
-                startActivity(Intent(this, HomeActivity::class.java))
-            } else {
-                toast("로그인 실패")
+        lifecycleScope.launch {
+            authViewModel.loginState.collect { loginState ->
+                when (loginState) {
+                    is LoginState.Success -> {
+                        toast("로그인 성공")
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                    }
+
+                    is LoginState.Error -> toast("로그인 실패")
+                    is LoginState.Loading -> toast("로그인 중")
+                }
             }
         }
     }
