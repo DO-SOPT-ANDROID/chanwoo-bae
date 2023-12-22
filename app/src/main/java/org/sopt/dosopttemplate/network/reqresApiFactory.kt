@@ -10,12 +10,10 @@ import retrofit2.Retrofit
 object reqresApiFactory {
     private const val BASE_URL = BuildConfig.USER_BASE_URL
 
-    private val json = Json { ignoreUnknownKeys = true }
-
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
