@@ -24,7 +24,7 @@ class AuthViewModel : ViewModel() {
     fun login(id: String, password: String) {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.login(RequestLoginDto(id, password))
+                authService.postLogin(RequestLoginDto(id, password))
             }.onSuccess {
                 if (it.isSuccessful) {
                     val response = it.body()

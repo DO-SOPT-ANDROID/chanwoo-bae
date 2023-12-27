@@ -106,7 +106,7 @@ class SignUpViewModel : ViewModel() {
     fun signUpServer(userEntity: User) {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.signUp(
+                authService.postSignUp(
                     RequestSignUpDto(
                         userEntity.id,
                         userEntity.pwd,
