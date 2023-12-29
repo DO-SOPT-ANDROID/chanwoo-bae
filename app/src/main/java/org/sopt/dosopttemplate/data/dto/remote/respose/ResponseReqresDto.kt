@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.network.doandroid
+package org.sopt.dosopttemplate.data.dto.remote.respose
 
 import kotlinx.serialization.Serializable
 

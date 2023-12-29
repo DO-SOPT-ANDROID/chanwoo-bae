@@ -1,14 +1,14 @@
-package org.sopt.dosopttemplate.network.login
+package org.sopt.dosopttemplate.data.dto.remote.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseLoginDto(
-    @SerialName("id")
-    val id: Int,
+data class RequestSignUpDto(
     @SerialName("username")
     val username: String,
+    @SerialName("password")
+    val password: String,
     @SerialName("nickname")
-    val nickname: String? = null,
+    val nickname: String,
 )
