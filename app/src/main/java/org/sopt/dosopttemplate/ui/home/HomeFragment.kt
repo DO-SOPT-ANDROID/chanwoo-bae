@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.FragmentHomeBinding
 import org.sopt.dosopttemplate.ui.home.adapter.HomeMainAdapter
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 import java.time.LocalDate
 
 class HomeFragment : Fragment() {

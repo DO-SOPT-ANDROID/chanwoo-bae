@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.user.UserInfo
-import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
-import org.sopt.dosopttemplate.network.login.RequestLoginDto
+import org.sopt.dosopttemplate.data.ApiFactory.ServicePool.authService
+import org.sopt.dosopttemplate.data.dto.remote.request.RequestLoginDto
+import org.sopt.dosopttemplate.ui.model.UserInfo
 
 class AuthViewModel : ViewModel() {
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)

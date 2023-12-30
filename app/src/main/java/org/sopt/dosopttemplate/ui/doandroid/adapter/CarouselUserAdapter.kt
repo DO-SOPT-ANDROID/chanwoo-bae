@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import org.sopt.dosopttemplate.data.dto.remote.respose.ResponseReqresDto
 import org.sopt.dosopttemplate.databinding.ItemCarouselIntroduceBinding
-import org.sopt.dosopttemplate.network.doandroid.ResponseReqresDto
 
 class CarouselUserAdapter(context: Context) :
     ListAdapter<ResponseReqresDto.Data, CarouselUserAdapter.CarouseViewHolder>(diffUtil) {

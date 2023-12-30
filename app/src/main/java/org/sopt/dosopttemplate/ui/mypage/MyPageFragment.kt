@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.databinding.FragmentMyPageBinding
+import org.sopt.dosopttemplate.ui.model.UserInfo
 
 class MyPageFragment : Fragment() {
 

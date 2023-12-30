@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.data.home
+package org.sopt.dosopttemplate.ui.model
 
 import androidx.annotation.DrawableRes
 

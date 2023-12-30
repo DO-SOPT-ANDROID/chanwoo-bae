@@ -1,5 +1,8 @@
-package org.sopt.dosopttemplate.network.login
+package org.sopt.dosopttemplate.data.service
 
+import org.sopt.dosopttemplate.data.dto.remote.request.RequestLoginDto
+import org.sopt.dosopttemplate.data.dto.remote.request.RequestSignUpDto
+import org.sopt.dosopttemplate.data.dto.remote.respose.ResponseLoginDto
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST

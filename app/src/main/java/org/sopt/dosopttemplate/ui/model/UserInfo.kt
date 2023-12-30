@@ -1,6 +1,4 @@
-package org.sopt.dosopttemplate.data.user
-
-import org.sopt.dosopttemplate.data.login.User
+package org.sopt.dosopttemplate.ui.model
 
 object UserInfo {
     var userInfoList = User(

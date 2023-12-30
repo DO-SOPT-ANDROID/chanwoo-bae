@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.login.User
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
+import org.sopt.dosopttemplate.ui.model.User
 import org.sopt.dosopttemplate.utils.toast
 
 class SignUpActivity : AppCompatActivity() {

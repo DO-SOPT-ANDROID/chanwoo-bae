@@ -2,8 +2,8 @@ package org.sopt.dosopttemplate.ui.home
 
 import androidx.lifecycle.ViewModel
 import org.sopt.dosopttemplate.R
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
-import org.sopt.dosopttemplate.data.user.UserInfo
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
+import org.sopt.dosopttemplate.ui.model.UserInfo
 
 class HomeViewModel : ViewModel() {
 
