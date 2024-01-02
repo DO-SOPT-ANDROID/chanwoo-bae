@@ -11,12 +11,16 @@ import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
 import org.sopt.dosopttemplate.ui.model.User
+import org.sopt.dosopttemplate.utils.UiState
+import org.sopt.dosopttemplate.utils.ViewModelFactory
 import org.sopt.dosopttemplate.utils.toast
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val viewModel by viewModels<SignUpViewModel>()
+    private val viewModel by viewModels<SignUpViewModel>() {
+        ViewModelFactory()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +45,7 @@ class SignUpActivity : AppCompatActivity() {
                 nickName = binding.editNickname.text.toString(),
                 mbti = binding.editMbti.text.toString(),
             )
-            viewModel.signUpServer(userEntity)
+            viewModel.postSignUp(userEntity)
             observeSignUpState(userEntity)
         }
     }
@@ -50,13 +54,13 @@ class SignUpActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.signUpState.collect {
                 when (it) {
-                    is SignUpState.Success -> {
+                    is UiState.Success -> {
                         sendUserData(userEntity)
                         toast(getString(R.string.toast_signUp_compeleted))
                     }
 
-                    is SignUpState.Error -> toast(getString(R.string.toast_signUp_fail))
-                    is SignUpState.Loading -> toast("회원가입 중")
+                    is UiState.Error -> toast(getString(R.string.toast_signUp_fail))
+                    is UiState.Loading -> toast("회원가입 중")
                 }
             }
         }

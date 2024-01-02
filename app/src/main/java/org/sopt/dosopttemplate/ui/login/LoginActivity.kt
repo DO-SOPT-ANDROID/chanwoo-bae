@@ -8,12 +8,15 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.ui.HomeActivity
+import org.sopt.dosopttemplate.utils.ViewModelFactory
 import org.sopt.dosopttemplate.utils.toast
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private val authViewModel by viewModels<AuthViewModel>()
+    private val authViewModel by viewModels<AuthViewModel>() {
+        ViewModelFactory()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
