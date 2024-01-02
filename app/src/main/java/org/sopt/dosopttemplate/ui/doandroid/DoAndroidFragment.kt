@@ -64,7 +64,11 @@ class DoAndroidFragment : Fragment() {
                         Toast.makeText(requireContext(), "서버 연결실패", Toast.LENGTH_SHORT).show()
                     }
 
-                    is UiState.Loading -> {}
+                    is UiState.Loading -> Toast.makeText(
+                        requireContext(),
+                        "로딩 중",
+                        Toast.LENGTH_SHORT,
+                    ).show()
                 }
             }
         }

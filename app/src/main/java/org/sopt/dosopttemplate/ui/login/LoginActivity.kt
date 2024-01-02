@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.databinding.ActivityLoginBinding
 import org.sopt.dosopttemplate.ui.HomeActivity
+import org.sopt.dosopttemplate.utils.UiState
 import org.sopt.dosopttemplate.utils.ViewModelFactory
 import org.sopt.dosopttemplate.utils.toast
 
@@ -57,13 +58,13 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             authViewModel.loginState.collect { loginState ->
                 when (loginState) {
-                    is LoginState.Success -> {
+                    is UiState.Success -> {
                         toast("로그인 성공")
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                     }
 
-                    is LoginState.Error -> toast("로그인 실패")
-                    is LoginState.Loading -> toast("로그인 중")
+                    is UiState.Error -> toast("로그인 실패")
+                    is UiState.Loading -> {}
                 }
             }
         }
