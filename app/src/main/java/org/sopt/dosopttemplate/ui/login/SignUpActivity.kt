@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                     }
 
                     is UiState.Error -> toast(getString(R.string.toast_signUp_fail))
-                    is UiState.Loading -> toast("회원가입 중")
+                    is UiState.Loading -> {}
                 }
             }
         }
