@@ -3,6 +3,7 @@ package org.sopt.dosopttemplate.utils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.sopt.dosopttemplate.data.ApiFactory
+import org.sopt.dosopttemplate.data.datasourceimpl.remote.ReqresDataSourceImpl
 import org.sopt.dosopttemplate.data.repositoryimpl.AuthRepository
 import org.sopt.dosopttemplate.data.repositoryimpl.ReqresRepositoryImpl
 import org.sopt.dosopttemplate.ui.doandroid.DoAndroidViewModel
@@ -25,7 +26,8 @@ class ViewModelFactory :
             }
 
             modelClass.isAssignableFrom(DoAndroidViewModel::class.java) -> {
-                val repository = ReqresRepositoryImpl(ApiFactory.ServicePool.userService)
+                val repository =
+                    ReqresRepositoryImpl(ReqresDataSourceImpl(ApiFactory.ServicePool.userService))
                 DoAndroidViewModel(repository) as T
             }
             // Add more ViewModel cases as needed
