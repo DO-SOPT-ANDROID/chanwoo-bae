@@ -1,29 +1,32 @@
 package org.sopt.dosopttemplate.ui.doandroid
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.carousel.CarouselLayoutManager
 import com.google.android.material.carousel.CarouselSnapHelper
 import com.google.android.material.carousel.HeroCarouselStrategy
+import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.databinding.FragmentDoAndroidBinding
-import org.sopt.dosopttemplate.network.doandroid.ResponseReqresDto
-import org.sopt.dosopttemplate.network.reqresApiFactory.ServicePool.reqresService
 import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselHeroAdapter
 import org.sopt.dosopttemplate.ui.doandroid.adapter.CarouselUserAdapter
 import org.sopt.dosopttemplate.ui.home.HomeViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.sopt.dosopttemplate.utils.UiState
+import org.sopt.dosopttemplate.utils.ViewModelFactory
 
 class DoAndroidFragment : Fragment() {
     private var _binding: FragmentDoAndroidBinding? = null
 
     private val viewModel by viewModels<HomeViewModel>()
+
+    private val doAndroidViewModel: DoAndroidViewModel by viewModels {
+        ViewModelFactory()
+    }
 
     private lateinit var carouselOriginalAdapter: CarouselUserAdapter
 
@@ -48,26 +51,23 @@ class DoAndroidFragment : Fragment() {
     }
 
     private fun initUserApi() {
-        reqresService.getUserList(1).enqueue(object : Callback<ResponseReqresDto> {
-            override fun onResponse(
-                call: Call<ResponseReqresDto>,
-                response: Response<ResponseReqresDto>,
-            ) {
-                if (response.isSuccessful) {
-                    val data = response.body() ?: return
-
-                    data.let {
-                        carouselOriginalAdapter.setCarouselList(it.data)
+        doAndroidViewModel.getReqresUserList(1)
+        lifecycleScope.launch {
+            doAndroidViewModel.reqresUserState.collect {
+                when (it) {
+                    is UiState.Success -> {
+                        val reqresData = it.data
+                        carouselOriginalAdapter.setCarouselList(reqresData)
                     }
-                } else {
-                    Log.d("userlist", "fail")
+
+                    is UiState.Error -> {
+                        Toast.makeText(requireContext(), "서버 연결실패", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is UiState.Loading -> {}
                 }
             }
-
-            override fun onFailure(call: Call<ResponseReqresDto>, t: Throwable) {
-                Log.e("doandroid", "Error: ${t.message}")
-            }
-        })
+        }
     }
 
     private fun initHeroCarousel() = with(binding) {
