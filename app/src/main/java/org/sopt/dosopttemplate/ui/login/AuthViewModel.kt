@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.ApiFactory.ServicePool.authService
 import org.sopt.dosopttemplate.data.dto.remote.request.RequestLoginDto
+import org.sopt.dosopttemplate.data.repositoryimpl.AuthRepository
 import org.sopt.dosopttemplate.ui.model.UserInfo
 
-class AuthViewModel : ViewModel() {
+class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
@@ -23,26 +23,25 @@ class AuthViewModel : ViewModel() {
 
     fun login(id: String, password: String) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                authService.postLogin(RequestLoginDto(id, password))
-            }.onSuccess {
-                if (it.isSuccessful) {
-                    val response = it.body()
-                    if (response != null) {
-                        _loginState.value = LoginState.Success(response)
-                        Log.d("server", _loginState.value.toString())
-                        UserInfo.updateUserInfo(
-                            id = response.id.toString(),
-                            nickName = response.nickname.toString(),
-                        )
+            authRepository.postLogin(RequestLoginDto(id, password))
+                .onSuccess {
+                    if (it.isSuccessful) {
+                        val response = it.body()
+                        if (response != null) {
+                            _loginState.value = LoginState.Success(response)
+                            Log.d("server", _loginState.value.toString())
+                            UserInfo.updateUserInfo(
+                                id = response.id.toString(),
+                                nickName = response.nickname.toString(),
+                            )
+                        }
+                    } else {
+                        _loginState.value = LoginState.Error
+                        Log.d("server", it.code().toString())
                     }
-                } else {
-                    _loginState.value = LoginState.Error
-                    Log.d("server", it.code().toString())
+                }.onFailure {
+                    Log.d("server", it.message.toString())
                 }
-            }.onFailure {
-                Log.d("server", it.message.toString())
-            }
         }
     }
 
