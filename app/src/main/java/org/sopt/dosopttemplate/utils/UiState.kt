@@ -6,7 +6,7 @@ sealed interface UiState<out T> {
 
     data class Success<T>(
         val data: T,
-    ) : UiState<Nothing>
+    ) : UiState<T>
 
     object Error : UiState<Nothing>
 }
