@@ -1,6 +1,5 @@
 package org.sopt.dosopttemplate.ui.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,14 +8,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.dto.remote.request.RequestSignUpDto
-import org.sopt.dosopttemplate.data.repositoryimpl.AuthRepository
-import org.sopt.dosopttemplate.ui.model.User
+import org.sopt.dosopttemplate.domain.entity.UserEntity
+import org.sopt.dosopttemplate.domain.repository.AuthDomainRepository
 import org.sopt.dosopttemplate.utils.UiState
 
-class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() {
-    private val _signUpState = MutableStateFlow<UiState<User>>(UiState.Loading)
-    val signUpState: StateFlow<UiState<User>> = _signUpState.asStateFlow()
+class SignUpViewModel(private val authRepository: AuthDomainRepository) : ViewModel() {
+    private val _signUpState = MutableStateFlow<UiState<UserEntity>>(UiState.Loading)
+    val signUpState: StateFlow<UiState<UserEntity>> = _signUpState.asStateFlow()
 
     private val id = MutableLiveData<String>()
     private val password = MutableLiveData<String>()
@@ -104,23 +102,14 @@ class SignUpViewModel(private val authRepository: AuthRepository) : ViewModel() 
         _isBtnSelected.value = isIdValid && isPasswordValid && isNickNameValid && isMbtiValid
     }
 
-    fun postSignUp(userEntity: User) {
+    fun postSignUp(userEntity: UserEntity) {
         viewModelScope.launch {
-            authRepository.postSignUp(
-                RequestSignUpDto(
-                    userEntity.id,
-                    userEntity.pwd,
-                    userEntity.nickName,
-                ),
-            ).onSuccess {
-                if (it.isSuccessful) {
+            authRepository.signUp(userEntity)
+                .onSuccess {
                     _signUpState.value = UiState.Success(userEntity)
-                } else {
+                }.onFailure {
                     _signUpState.value = UiState.Error
                 }
-            }.onFailure {
-                Log.e("SignUpActivity", "Error: ${it.message}")
-            }
         }
     }
 }

@@ -10,7 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.R
 import org.sopt.dosopttemplate.databinding.ActivitySignUpBinding
-import org.sopt.dosopttemplate.ui.model.User
+import org.sopt.dosopttemplate.domain.entity.UserEntity
 import org.sopt.dosopttemplate.utils.UiState
 import org.sopt.dosopttemplate.utils.ViewModelFactory
 import org.sopt.dosopttemplate.utils.toast
@@ -39,23 +39,23 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initSignUp() {
         binding.btnLogin.setOnClickListener {
-            val userEntity = User(
+            val userEntity = UserEntity(
                 id = binding.editId.text.toString(),
                 pwd = binding.editPwd.text.toString(),
                 nickName = binding.editNickname.text.toString(),
                 mbti = binding.editMbti.text.toString(),
             )
             viewModel.postSignUp(userEntity)
-            observeSignUpState(userEntity)
+            observeSignUpState()
         }
     }
 
-    private fun observeSignUpState(userEntity: User) {
+    private fun observeSignUpState() {
         lifecycleScope.launch {
             viewModel.signUpState.collect {
                 when (it) {
                     is UiState.Success -> {
-                        sendUserData(userEntity)
+                        sendUserData(it.data)
                         toast(getString(R.string.toast_signUp_compeleted))
                     }
 
@@ -66,7 +66,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendUserData(userEntity: User) {
+    private fun sendUserData(userEntity: UserEntity) {
         val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
         intent.putExtra(USER_TAG, userEntity)
         // LoginActivity로 결과를 반환
