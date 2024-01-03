@@ -2,6 +2,7 @@ package org.sopt.dosopttemplate.data.dto.remote.respose
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.sopt.dosopttemplate.domain.entity.UserEntity
 
 @Serializable
 data class ResponseLoginDto(
@@ -10,5 +11,12 @@ data class ResponseLoginDto(
     @SerialName("username")
     val username: String,
     @SerialName("nickname")
-    val nickname: String? = null,
-)
+    val nickname: String,
+) {
+    fun toUserEntity() = UserEntity(
+        id = username,
+        pwd = "",
+        nickName = nickname,
+        mbti = "",
+    )
+}
