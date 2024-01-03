@@ -3,8 +3,8 @@ package org.sopt.dosopttemplate.ui.home.adapter.viewholder
 import DateUtils
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemBirthdayBinding
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 

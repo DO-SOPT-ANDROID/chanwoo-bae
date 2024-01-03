@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemBirthdayBinding
 import org.sopt.dosopttemplate.databinding.ItemFriendBinding
 import org.sopt.dosopttemplate.databinding.ItemMyProfileBinding
@@ -15,6 +14,7 @@ import org.sopt.dosopttemplate.ui.home.adapter.viewholder.BirthdayViewHolder
 import org.sopt.dosopttemplate.ui.home.adapter.viewholder.FriendViewHolder
 import org.sopt.dosopttemplate.ui.home.adapter.viewholder.ProfileViewHolder
 import org.sopt.dosopttemplate.ui.home.adapter.viewholder.TitleLineViewHolder
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 import java.lang.IllegalArgumentException
 
 class HomeMainAdapter(context: Context) :

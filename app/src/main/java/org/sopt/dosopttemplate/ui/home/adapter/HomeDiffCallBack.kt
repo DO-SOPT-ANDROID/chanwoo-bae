@@ -1,7 +1,7 @@
 package org.sopt.dosopttemplate.ui.home.adapter
 
 import androidx.recyclerview.widget.DiffUtil
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 
 object HomeDiffCallBack : DiffUtil.ItemCallback<HomeSealedItem>() {
 

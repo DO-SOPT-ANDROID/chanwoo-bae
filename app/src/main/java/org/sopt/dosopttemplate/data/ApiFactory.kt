@@ -1,4 +1,4 @@
-package org.sopt.dosopttemplate.network
+package org.sopt.dosopttemplate.data
 
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -8,11 +8,13 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.sopt.dosopttemplate.BuildConfig
-import org.sopt.dosopttemplate.network.login.AuthService
+import org.sopt.dosopttemplate.data.service.AuthService
+import org.sopt.dosopttemplate.data.service.ReqresService
 import retrofit2.Retrofit
 
 object ApiFactory {
-    private const val BASE_URL = BuildConfig.AUTH_BASE_URL
+    private const val AUTH_BASE_URL = BuildConfig.AUTH_BASE_URL
+    private const val USER_BASE_URL = BuildConfig.USER_BASE_URL
 
     /* 1. 일단 로깅을 해줄 인터셉트를 만들어 줍니다.
        2. 이 함수는 Http통신 중 로깅을 담당
@@ -34,17 +36,25 @@ object ApiFactory {
         .addInterceptor(getLogOkHttpClient())
         .build()
 
-    val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
+    private fun createRetrofit(baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
             .client(okHttpClient) // 여기에 달아준다.
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
-    inline fun <reified T> create(): T = retrofit.create<T>(T::class.java)
+    private inline fun <reified T> create(baseUrl: String): T {
+        return createRetrofit(baseUrl).create(T::class.java)
+    }
 
     object ServicePool {
-        val authService = ApiFactory.create<AuthService>()
+        val authService: AuthService by lazy {
+            create<AuthService>(AUTH_BASE_URL)
+        }
+
+        val userService: ReqresService by lazy {
+            create<ReqresService>(USER_BASE_URL)
+        }
     }
 }
