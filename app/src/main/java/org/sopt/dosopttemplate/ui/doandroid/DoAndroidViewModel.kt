@@ -7,10 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.domain.entity.ReqresEntity
-import org.sopt.dosopttemplate.domain.repository.ReqresRepository
+import org.sopt.dosopttemplate.domain.repository.ReqresDomainRepository
 import org.sopt.dosopttemplate.utils.UiState
 
-class DoAndroidViewModel(val reqresRepository: ReqresRepository) : ViewModel() {
+class DoAndroidViewModel(val reqresRepository: ReqresDomainRepository) : ViewModel() {
 
     private val _reqresUserState = MutableStateFlow<UiState<List<ReqresEntity>>>(UiState.Loading)
     val reqresUserState get() = _reqresUserState.asStateFlow()
