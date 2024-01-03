@@ -5,20 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.sopt.dosopttemplate.data.user.UserInfo
 import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
 import org.sopt.dosopttemplate.network.login.RequestLoginDto
-import org.sopt.dosopttemplate.network.login.ResponseLoginDto
 
 class AuthViewModel : ViewModel() {
-    private val _loginResult: MutableLiveData<ResponseLoginDto> = MutableLiveData()
-    val loginResult: LiveData<ResponseLoginDto>
-        get() = _loginResult
-
-    private val _loginSuccess: MutableLiveData<Boolean> = MutableLiveData()
-    val loginSuccess: LiveData<Boolean>
-        get() = _loginSuccess
+    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
+    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
     private val _isLoginButtonClicked: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoginButtonClicked: LiveData<Boolean>
@@ -27,16 +24,20 @@ class AuthViewModel : ViewModel() {
     fun login(id: String, password: String) {
         viewModelScope.launch {
             kotlin.runCatching {
-                authService.login(RequestLoginDto(id, password))
+                authService.postLogin(RequestLoginDto(id, password))
             }.onSuccess {
                 if (it.isSuccessful) {
-                    _loginResult.value = it.body()
-                    Log.d("server", _loginResult.value.toString())
-                    UserInfo.userInfoList.nickName = it.body()?.username.toString()
-                    UserInfo.userInfoList.id = it.body()?.id.toString()
-                    _loginSuccess.value = true
+                    val response = it.body()
+                    if (response != null) {
+                        _loginState.value = LoginState.Success(response)
+                        Log.d("server", _loginState.value.toString())
+                        UserInfo.updateUserInfo(
+                            id = response.id.toString(),
+                            nickName = response.nickname.toString(),
+                        )
+                    }
                 } else {
-                    _loginSuccess.value = false
+                    _loginState.value = LoginState.Error
                     Log.d("server", it.code().toString())
                 }
             }.onFailure {
