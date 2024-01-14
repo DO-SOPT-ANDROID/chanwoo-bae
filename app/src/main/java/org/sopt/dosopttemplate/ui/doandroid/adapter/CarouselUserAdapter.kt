@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.sopt.dosopttemplate.databinding.ItemCarouselIntroduceBinding
-import org.sopt.dosopttemplate.network.doandroid.ResponseReqresDto
+import org.sopt.dosopttemplate.domain.entity.ReqresEntity
 
 class CarouselUserAdapter(context: Context) :
-    ListAdapter<ResponseReqresDto.Data, CarouselUserAdapter.CarouseViewHolder>(diffUtil) {
+    ListAdapter<ReqresEntity, CarouselUserAdapter.CarouseViewHolder>(diffUtil) {
     private val inflater by lazy { LayoutInflater.from(context) }
 
     inner class CarouseViewHolder(private val binding: ItemCarouselIntroduceBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: ResponseReqresDto.Data) {
+        fun bind(data: ReqresEntity) {
             Glide.with(itemView)
                 .load(data.avatar)
                 .into(binding.imgCarousel)
@@ -36,23 +36,23 @@ class CarouselUserAdapter(context: Context) :
     override fun getItemCount() = currentList.size
 
     // submitList 사용
-    fun setCarouselList(imgList: List<ResponseReqresDto.Data>) {
+    fun setCarouselList(imgList: List<ReqresEntity>) {
         submitList(imgList.toMutableList())
     }
 
     // diffUtill callback
     companion object {
-        private var diffUtil = object : DiffUtil.ItemCallback<ResponseReqresDto.Data>() {
+        private var diffUtil = object : DiffUtil.ItemCallback<ReqresEntity>() {
             override fun areItemsTheSame(
-                oldItem: ResponseReqresDto.Data,
-                newItem: ResponseReqresDto.Data,
+                oldItem: ReqresEntity,
+                newItem: ReqresEntity,
             ): Boolean {
                 return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(
-                oldItem: ResponseReqresDto.Data,
-                newItem: ResponseReqresDto.Data,
+                oldItem: ReqresEntity,
+                newItem: ReqresEntity,
             ): Boolean {
                 return oldItem == newItem
             }

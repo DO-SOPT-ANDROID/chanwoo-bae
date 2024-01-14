@@ -5,17 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
-import org.sopt.dosopttemplate.data.user.UserInfo
-import org.sopt.dosopttemplate.network.ApiFactory.ServicePool.authService
-import org.sopt.dosopttemplate.network.login.RequestLoginDto
+import org.sopt.dosopttemplate.domain.entity.UserEntity
+import org.sopt.dosopttemplate.domain.entity.UserRequestEntity
+import org.sopt.dosopttemplate.domain.repository.AuthDomainRepository
+import org.sopt.dosopttemplate.utils.UiState
 
-class AuthViewModel : ViewModel() {
-    private val _loginState = MutableStateFlow<LoginState>(LoginState.Loading)
-    val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
+class AuthViewModel(private val authRepository: AuthDomainRepository) : ViewModel() {
+    private val _loginState = MutableSharedFlow<UiState<UserEntity>>()
+    val loginState: SharedFlow<UiState<UserEntity>> get() = _loginState.asSharedFlow()
 
     private val _isLoginButtonClicked: MutableLiveData<Boolean> = MutableLiveData(false)
     val isLoginButtonClicked: LiveData<Boolean>
@@ -23,26 +24,14 @@ class AuthViewModel : ViewModel() {
 
     fun login(id: String, password: String) {
         viewModelScope.launch {
-            kotlin.runCatching {
-                authService.postLogin(RequestLoginDto(id, password))
-            }.onSuccess {
-                if (it.isSuccessful) {
-                    val response = it.body()
-                    if (response != null) {
-                        _loginState.value = LoginState.Success(response)
-                        Log.d("server", _loginState.value.toString())
-                        UserInfo.updateUserInfo(
-                            id = response.id.toString(),
-                            nickName = response.nickname.toString(),
-                        )
-                    }
-                } else {
-                    _loginState.value = LoginState.Error
-                    Log.d("server", it.code().toString())
+            authRepository.login(UserRequestEntity(id, password))
+                .onSuccess {
+                    _loginState.emit(UiState.Success(it))
                 }
-            }.onFailure {
-                Log.d("server", it.message.toString())
-            }
+                .onFailure {
+                    Log.d("server", it.message.toString())
+                    _loginState.emit(UiState.Error)
+                }
         }
     }
 

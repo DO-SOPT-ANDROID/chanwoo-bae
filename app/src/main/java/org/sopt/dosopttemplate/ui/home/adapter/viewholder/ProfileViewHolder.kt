@@ -1,8 +1,8 @@
 package org.sopt.dosopttemplate.ui.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemMyProfileBinding
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 
 class ProfileViewHolder(private val binding: ItemMyProfileBinding) :
     RecyclerView.ViewHolder(binding.root) {

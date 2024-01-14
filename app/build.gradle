@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.20'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 Properties properties = new Properties()
@@ -30,23 +33,26 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
     buildFeatures {
         buildConfig true
         viewBinding true
         dataBinding true
     }
-
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes true
+    }
 }
 
 dependencies {
-    // parcelize
-    apply plugin: 'kotlin-parcelize'
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
 
     // viewmodel 의존성 추가
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2"

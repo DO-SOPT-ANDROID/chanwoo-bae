@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.dosopttemplate.data.home.HomeSealedItem
 import org.sopt.dosopttemplate.databinding.ItemCarouselBinding
+import org.sopt.dosopttemplate.ui.model.HomeSealedItem
 
 class CarouselHeroAdapter(context: Context) :
     ListAdapter<HomeSealedItem.Birthday, CarouselHeroAdapter.CarouseViewHolder>(diffUtil) {

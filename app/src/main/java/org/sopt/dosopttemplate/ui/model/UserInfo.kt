@@ -1,9 +1,9 @@
-package org.sopt.dosopttemplate.data.user
+package org.sopt.dosopttemplate.ui.model
 
-import org.sopt.dosopttemplate.data.login.User
+import org.sopt.dosopttemplate.domain.entity.UserEntity
 
 object UserInfo {
-    var userInfoList = User(
+    var userInfoList = UserEntity(
         id = "",
         pwd = "",
         nickName = "",

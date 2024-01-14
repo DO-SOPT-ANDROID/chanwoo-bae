@@ -1,6 +1,7 @@
-package org.sopt.dosopttemplate.network.doandroid
+package org.sopt.dosopttemplate.data.dto.remote.respose
 
 import kotlinx.serialization.Serializable
+import org.sopt.dosopttemplate.domain.entity.ReqresEntity
 
 @Serializable
 data class ResponseReqresDto(
@@ -25,4 +26,14 @@ data class ResponseReqresDto(
         val text: String,
         val url: String,
     )
+
+    fun toReqresList(): List<ReqresEntity> = data.map {
+        ReqresEntity(
+            id = it.id,
+            email = it.email,
+            first_name = it.first_name,
+            last_name = it.last_name,
+            avatar = it.avatar,
+        )
+    }
 }
